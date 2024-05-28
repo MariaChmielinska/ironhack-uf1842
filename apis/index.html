@@ -61,10 +61,13 @@
                 userFullName.textContent = data.name;
                 userBio.textContent = data.bio;
                 userPic.src = data.avatar_url;
-                const link = document.createElement("a");
-                link.textContent = data.html_url;
-                link.href = data.html_url;
-                userUrl.append(link);
+                // const link = document.createElement("a");
+                // link.textContent = data.html_url;
+                // link.href = data.html_url;
+                // userUrl.append(link);
+                const link = `<a href=${data.html_url}>${data.html_url}</a>`;
+                    userUrl.innerHTML = link;
+
             }else{
                 console.log("ERROR");
                 const message = document.createElement("p");
@@ -75,6 +78,7 @@
             const messageEmpty = document.createElement("p");
                 messageEmpty.textContent = "User empty! Please insert User Name";
                 userNameInput.after(messageEmpty);
+
         }
         })
     </script>
