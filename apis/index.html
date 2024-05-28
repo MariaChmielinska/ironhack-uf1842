@@ -34,6 +34,50 @@
             </tbody>
         </table>
     </main>
+    <script>
+    const button = document.querySelector("button");
+    const userFullName = document.querySelector("#fullName");
+    const userBio = document.querySelector("#bio");
+    const userPic = document.querySelector("#profilePicture");
+    const userUrl = document.querySelector("#homeUrl");
+    const userNameInput = document.querySelector ("#username");
+    
+    button.addEventListener("click", async function (){
+        console.log("Input Value showing", userNameInput.value);
+
+        let url = "https://api.github.com/users/";
+
+        if(userNameInput.value){
+            url = url + userNameInput.value;
+
+            const response = await fetch(url);
+            console.log("SHOW response data", response); 
+            console.log("response status", response.status); 
+
+            if(response.status === 200){
+                const data = await response.json(); 
+                console.log("Show data", data);
+            
+                userFullName.textContent = data.name;
+                userBio.textContent = data.bio;
+                userPic.src = data.avatar_url;
+                const link = document.createElement("a");
+                link.textContent = data.html_url;
+                link.href = data.html_url;
+                userUrl.append(link);
+            }else{
+                console.log("ERROR");
+                const message = document.createElement("p");
+                message.textContent = "User not found!";
+                userNameInput.after(message);
+            }
+        }else{
+            const messageEmpty = document.createElement("p");
+                messageEmpty.textContent = "User empty! Please insert User Name";
+                userNameInput.after(messageEmpty);
+        }
+        })
+    </script>
 </body>
 
 </html>
